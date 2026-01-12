@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# Solfil - Website Institucional
 
-This contains everything you need to run your app locally.
+Website oficial da Solfil Materiais de Construção. Desenvolvido com React 19, Vite e Tailwind CSS.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1Gxnpwk_ZXivxsPfGxXDZt_YSamtHZ3v5
+## 🚀 Como Publicar (Deploy)
 
-## Run Locally
+### 1. Preparar o GitHub
+1. Crie um novo repositório no seu GitHub.
+2. No seu terminal, dentro da pasta do projeto:
+   ```bash
+   git init
+   git add .
+   git commit -m "feat: setup inicial solfil"
+   git branch -M main
+   git remote add origin https://github.com/O-SEU-UTILIZADOR/NOME-DO-REPO.git
+   git push -u origin main
+   ```
 
-**Prerequisites:**  Node.js
+### 2. Publicar na Vercel
+1. Aceda a [vercel.com](https://vercel.com) e faça login com o GitHub.
+2. Clique em **"Add New"** > **"Project"**.
+3. Importe o repositório que acabou de criar.
+4. A Vercel detetará automaticamente as configurações do **Vite**.
+5. Clique em **"Deploy"**.
 
+## 🛠 Notas Técnicas
+- **Build:** O projeto utiliza o Vite para gerar uma build otimizada na pasta `/dist`.
+- **SPA:** O ficheiro `vercel.json` garante que as rotas e navegação funcionam corretamente após o deploy.
+- **Assets:** O logo é carregado remotamente via GitHub Raw para garantir consistência visual.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+© 2025 Solfil - Materiais de Construção

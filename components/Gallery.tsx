@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Language } from '../types';
 
 interface GalleryImage {
   id: number;
@@ -54,8 +55,27 @@ const galleryImages: GalleryImage[] = [
   },
 ];
 
-const Gallery: React.FC = () => {
+const Gallery: React.FC<{ lang: Language }> = ({ lang }) => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+
+  const translations = {
+    PT: {
+      tag: 'GALERIA',
+      title1: 'IMAGENS QUE',
+      title2: 'INSPIRAM',
+      prev: 'Anterior',
+      next: 'Próximo'
+    },
+    EN: {
+      tag: 'GALLERY',
+      title1: 'IMAGES THAT',
+      title2: 'INSPIRE',
+      prev: 'Previous',
+      next: 'Next'
+    }
+  };
+
+  const t = translations[lang];
 
   const openLightbox = (img: GalleryImage) => {
     setSelectedImage(img);
@@ -69,23 +89,21 @@ const Gallery: React.FC = () => {
 
   return (
     <div className="container mx-auto px-6">
-      {/* Header da Galeria seguindo a referência */}
       <div className="flex justify-between items-end mb-12 lg:mb-20">
         <div>
-          <h3 className="text-solfil-orange font-black tracking-[0.4em] text-[10px] mb-6 uppercase">GALERIA</h3>
+          <h3 className="text-solfil-orange font-black tracking-[0.4em] text-[10px] mb-6 uppercase">{t.tag}</h3>
           <h2 className="text-5xl lg:text-7xl font-light text-solfil-black uppercase tracking-tighter leading-none">
-            IMAGENS QUE <span className="font-semibold italic">INSPIRAM</span><span className="font-bold text-solfil-orange">.</span>
+            {t.title1} <span className="font-semibold italic">{t.title2}</span><span className="font-bold text-solfil-orange">.</span>
           </h2>
         </div>
         
-        {/* Navegação Estilo Referência */}
         <div className="hidden md:flex gap-4">
-          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-solfil-black hover:border-solfil-orange hover:text-solfil-orange transition-all">
+          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-solfil-black hover:border-solfil-orange hover:text-solfil-orange transition-all" aria-label={t.prev}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <button className="w-12 h-12 rounded-full bg-solfil-black text-white flex items-center justify-center hover:bg-solfil-orange transition-all shadow-lg">
+          <button className="w-12 h-12 rounded-full bg-solfil-black text-white flex items-center justify-center hover:bg-solfil-orange transition-all shadow-lg" aria-label={t.next}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -93,13 +111,12 @@ const Gallery: React.FC = () => {
         </div>
       </div>
 
-      {/* Grelha Assimétrica Estilo "Journey in Asia" */}
       <div className="grid grid-cols-4 lg:grid-cols-8 grid-rows-none lg:grid-rows-3 gap-4 lg:gap-6 min-h-[800px]">
         {galleryImages.map((img) => (
           <div 
             key={img.id} 
             onClick={() => openLightbox(img)}
-            className={`${img.gridClass} group relative rounded-[24px] lg:rounded-[40px] overflow-hidden bg-solfil-black cursor-pointer shadow-sm transition-all duration-700 hover:shadow-2xl`}
+            className={`${img.gridClass} group relative rounded-[24px] lg:rounded-[40px] overflow-hidden bg-solfil-black cursor-pointer shadow-sm transition-all duration-700 hover:shadow-[0_20px_50px_rgba(254,80,0,0.15)] hover:-translate-y-3`}
           >
             <img 
               src={img.url} 
@@ -110,7 +127,6 @@ const Gallery: React.FC = () => {
                 (e.target as HTMLImageElement).style.opacity = '0';
               }}
             />
-            {/* Overlay com Ícone de Zoom */}
             <div className="absolute inset-0 bg-solfil-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white transform scale-90 group-hover:scale-100 transition-transform duration-500">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +134,6 @@ const Gallery: React.FC = () => {
                   </svg>
                </div>
             </div>
-            {/* Label de Categoria */}
             <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
                <span className="bg-solfil-orange text-white text-[8px] font-black tracking-[0.4em] px-4 py-2 rounded-full uppercase">
                  {img.category}
@@ -128,7 +143,6 @@ const Gallery: React.FC = () => {
         ))}
       </div>
 
-      {/* Lightbox Modal */}
       {selectedImage && (
         <div 
           className="fixed inset-0 z-[100] bg-solfil-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-10 animate-in fade-in duration-300"

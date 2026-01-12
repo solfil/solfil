@@ -1,196 +1,244 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Language } from '../types';
 
-const Contact: React.FC = () => {
+const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  
+  const translations = {
+    PT: {
+      tag: 'CONTACTE-NOS',
+      title1: 'VAMOS CONSTRUIR',
+      title2: 'ALGO GRANDE',
+      p: 'Tem um projeto em mãos ou precisa de aconselhamento técnico? A nossa equipa de especialistas está pronta para ajudar.',
+      successTitle: 'Mensagem Enviada!',
+      successDesc: 'Agradecemos o seu contacto. O seu pedido foi enviado com sucesso. Responderemos o mais brevemente possível.',
+      successBtn: 'Enviar nova mensagem',
+      labelName: 'Nome Completo*',
+      labelEmail: 'E-mail*',
+      labelPhone: 'Contacto Telefónico*',
+      labelType: 'Tipo de Cliente',
+      labelMsg: 'Mensagem / Lista de Materiais',
+      submit: 'ENVIAR MENSAGEM',
+      submitting: 'A ENVIAR...',
+      error: 'Erro no envio. Verifique se preencheu tudo corretamente ou tente mais tarde.',
+      types: ['Empresa / Profissional', 'Particular', 'Arquiteto / Projetista']
+    },
+    EN: {
+      tag: 'CONTACT US',
+      title1: "LET'S BUILD",
+      title2: 'SOMETHING GREAT',
+      p: 'Do you have a project or need technical advice? Our team of specialists is ready to help.',
+      successTitle: 'Message Sent!',
+      successDesc: 'Thank you for contacting us. Your request has been sent successfully. We will respond as soon as possible.',
+      successBtn: 'Send another message',
+      labelName: 'Full Name*',
+      labelEmail: 'Email*',
+      labelPhone: 'Phone Number*',
+      labelType: 'Client Type',
+      labelMsg: 'Message / Material List',
+      submit: 'SEND MESSAGE',
+      submitting: 'SENDING...',
+      error: 'Sending error. Please check all fields or try again later.',
+      types: ['Company / Professional', 'Private Individual', 'Architect / Designer']
+    }
+  };
+
+  const t = translations[lang];
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    clientType: 'Empresa / Profissional',
+    clientType: '',
     message: ''
   });
+
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      clientType: translations[lang].types[0]
+    }));
+  }, [lang]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-
+    
     try {
-      // Usando formsubmit.co para envio de email real sem necessidade de backend próprio
+      // Use the AJAX endpoint of FormSubmit to handle it as a single page application
       const response = await fetch('https://formsubmit.co/ajax/tpacheco@aorubro.pt', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Accept': 'application/json' 
         },
-        body: JSON.stringify({
-          ...formData,
-          _subject: 'Pedido de Contacto via Web',
-          _template: 'table', // Formatação de tabela no corpo do email
-          _captcha: 'false'   // Simplifica o processo removendo o captcha
+        body: JSON.stringify({ 
+          ...formData, 
+          _subject: `Solicitação Website Solfil: ${formData.name}`,
+          _captcha: "false", // Must be false for AJAX submission
+          _replyto: formData.email,
+          _template: 'box'
         })
       });
-
-      if (response.ok) {
+      
+      const result = await response.json();
+      
+      if (response.ok && (result.success === "true" || result.success === true)) {
         setStatus('success');
-        setFormData({ name: '', email: '', phone: '', clientType: 'Empresa / Profissional', message: '' });
+        setFormData({ 
+          name: '', 
+          email: '', 
+          phone: '', 
+          clientType: t.types[0], 
+          message: '' 
+        });
       } else {
-        setStatus('error');
+        throw new Error('Server returned failure');
       }
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
+      console.error('Submission error:', error);
       setStatus('error');
+      // Clear error after 5 seconds
+      setTimeout(() => setStatus('idle'), 5000);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="container mx-auto px-6">
-      <div className="bg-white rounded-[48px] overflow-hidden shadow-sm border border-gray-100">
+    <div className="container mx-auto px-4 sm:px-6">
+      <div className="bg-white rounded-[32px] md:rounded-[48px] overflow-hidden shadow-2xl shadow-solfil-black/5 border border-gray-100">
         <div className="grid lg:grid-cols-2 gap-0">
-          <div className="p-12 lg:p-20">
-            <div className="max-w-xl">
-              <h3 className="text-solfil-orange font-semibold tracking-[0.4em] text-[10px] mb-6 uppercase">CONTACTE-NOS</h3>
-              <h2 className="text-4xl font-light mb-6 uppercase text-solfil-black tracking-tighter">VAMOS CONSTRUIR<br /><span className="font-semibold">ALGO GRANDE</span><span className="font-bold text-solfil-orange">.</span></h2>
+          <div className="p-6 sm:p-10 md:p-16 lg:p-20">
+            <div className="max-w-xl mx-auto lg:mx-0">
+              <h3 className="text-solfil-orange font-black tracking-[0.4em] text-[10px] mb-4 uppercase">{t.tag}</h3>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-6 uppercase text-solfil-black tracking-tighter leading-[1.1]">
+                {t.title1}<br /><span className="font-semibold italic">{t.title2}</span><span className="font-bold text-solfil-orange">.</span>
+              </h2>
               
               {status === 'success' ? (
-                <div className="bg-green-50 border border-green-100 p-10 rounded-3xl animate-in fade-in zoom-in duration-500">
-                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white mb-6 mx-auto">
+                <div className="bg-green-50 border border-green-100 p-8 rounded-[32px] animate-in zoom-in duration-500 text-center">
+                  <div className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-200">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-green-800 text-center mb-2 uppercase tracking-tight">Mensagem Enviada!</h3>
-                  <p className="text-green-700 text-center font-light leading-relaxed">
-                    Agradecemos o seu contacto. O seu pedido foi enviado com sucesso para os nossos escritórios (tpacheco@aorubro.pt). Responderemos o mais brevemente possível.
-                  </p>
+                  <h3 className="text-xl font-bold text-green-900 mb-2 uppercase tracking-tight">{t.successTitle}</h3>
+                  <p className="text-green-700 font-light leading-relaxed mb-8 text-sm">{t.successDesc}</p>
                   <button 
-                    onClick={() => setStatus('idle')}
-                    className="mt-8 w-full py-4 border border-green-200 text-green-800 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-green-100 transition-colors"
+                    onClick={() => setStatus('idle')} 
+                    className="w-full py-4 bg-green-600 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-green-700 transition-all active:scale-95 shadow-md"
                   >
-                    Enviar nova mensagem
+                    {t.successBtn}
                   </button>
                 </div>
               ) : (
                 <>
-                  <p className="text-solfil-gray mb-12 font-light text-lg">Tem um projeto em mãos ou precisa de aconselhamento técnico?<br />A nossa equipa de especialistas está pronta para ajudar.</p>
-
-                  <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-semibold text-solfil-black uppercase tracking-wider">Nome Completo*</label>
+                  <p className="text-solfil-gray mb-10 font-light text-base md:text-lg leading-relaxed">{t.p}</p>
+                  <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-solfil-black uppercase tracking-widest ml-1">{t.labelName}</label>
                         <input 
-                          required
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
+                          required 
+                          name="name" 
+                          value={formData.name} 
+                          onChange={handleChange} 
                           type="text" 
-                          placeholder="Seu Nome" 
-                          className="w-full bg-gray-50 border-none rounded-xl px-5 py-4 focus:ring-1 focus:ring-solfil-orange transition-all font-light" 
+                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none text-sm" 
                         />
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-semibold text-solfil-black uppercase tracking-wider">E-mail*</label>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-solfil-black uppercase tracking-widest ml-1">{t.labelEmail}</label>
                         <input 
-                          required
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
+                          required 
+                          name="email" 
+                          value={formData.email} 
+                          onChange={handleChange} 
                           type="email" 
-                          placeholder="seu@email.com" 
-                          className="w-full bg-gray-50 border-none rounded-xl px-5 py-4 focus:ring-1 focus:ring-solfil-orange transition-all font-light" 
+                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none text-sm" 
                         />
                       </div>
                     </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-semibold text-solfil-black uppercase tracking-wider">Contacto Telefónico*</label>
-                        <div className="flex gap-2">
-                           <div className="w-14 bg-gray-50 rounded-xl flex items-center justify-center font-medium text-xs">🇵🇹</div>
-                           <input 
-                            required
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            type="tel" 
-                            placeholder="+351" 
-                            className="flex-1 bg-gray-50 border-none rounded-xl px-5 py-4 focus:ring-1 focus:ring-solfil-orange transition-all font-light" 
-                           />
+                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-solfil-black uppercase tracking-widest ml-1">{t.labelPhone}</label>
+                        <input 
+                          required 
+                          name="phone" 
+                          value={formData.phone} 
+                          onChange={handleChange} 
+                          type="tel" 
+                          placeholder="+351" 
+                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none text-sm" 
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-solfil-black uppercase tracking-widest ml-1">{t.labelType}</label>
+                        <div className="relative">
+                          <select 
+                            name="clientType" 
+                            value={formData.clientType} 
+                            onChange={handleChange} 
+                            className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none appearance-none cursor-pointer text-sm"
+                          >
+                            {t.types.map(type => <option key={type} value={type}>{type}</option>)}
+                          </select>
+                          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-solfil-gray/40">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" /></svg>
+                          </div>
                         </div>
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-semibold text-solfil-black uppercase tracking-wider">Tipo de Cliente</label>
-                        <select 
-                          name="clientType"
-                          value={formData.clientType}
-                          onChange={handleChange}
-                          className="w-full bg-gray-50 border-none rounded-xl px-5 py-4 focus:ring-1 focus:ring-solfil-orange transition-all appearance-none font-light"
-                        >
-                          <option>Empresa / Profissional</option>
-                          <option>Particular</option>
-                          <option>Arquiteto / Projetista</option>
-                        </select>
-                      </div>
                     </div>
-
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-semibold text-solfil-black uppercase tracking-wider">Mensagem / Lista de Materiais</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-solfil-black uppercase tracking-widest ml-1">{t.labelMsg}</label>
                       <textarea 
-                        required
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
+                        required 
+                        name="message" 
+                        value={formData.message} 
+                        onChange={handleChange} 
                         rows={4} 
-                        placeholder="Como podemos ajudar no seu projeto?" 
-                        className="w-full bg-gray-50 border-none rounded-xl px-5 py-4 focus:ring-1 focus:ring-solfil-orange transition-all resize-none font-light"
+                        className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange resize-none font-light transition-all outline-none text-sm"
                       ></textarea>
                     </div>
-
+                    
                     {status === 'error' && (
-                      <p className="text-red-500 text-xs font-bold uppercase tracking-widest bg-red-50 p-4 rounded-xl">
-                        Ocorreu um erro ao enviar. Por favor, verifique os campos ou tente novamente mais tarde.
-                      </p>
+                      <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-[10px] font-bold text-center border border-red-100 uppercase tracking-widest animate-pulse">
+                        {t.error}
+                      </div>
                     )}
 
                     <button 
-                      disabled={status === 'submitting'}
-                      type="submit"
-                      className="w-full bg-solfil-black text-white py-5 rounded-2xl font-semibold text-sm hover:bg-solfil-orange transition-all flex items-center justify-center gap-4 group uppercase tracking-[0.3em] shadow-lg hover:shadow-solfil-orange/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={status === 'submitting'} 
+                      type="submit" 
+                      className="w-full bg-solfil-black text-white py-5 rounded-2xl font-bold text-xs md:text-sm hover:bg-solfil-orange disabled:opacity-70 transition-all flex items-center justify-center gap-4 uppercase tracking-[0.3em] shadow-xl active:scale-[0.98] mt-4"
                     >
                       {status === 'submitting' ? (
                         <>
-                          A ENVIAR...
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          {t.submitting}
                         </>
-                      ) : (
-                        <>
-                          ENVIAR MENSAGEM
-                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                        </>
-                      )}
+                      ) : t.submit}
                     </button>
                   </form>
                 </>
               )}
             </div>
           </div>
-
-          <div className="hidden lg:block relative overflow-hidden">
+          <div className="hidden lg:block relative overflow-hidden bg-solfil-black">
             <img 
               src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1000" 
-              alt="Industrial Structure" 
-              className="w-full h-full object-cover grayscale opacity-80"
-              loading="lazy"
-              decoding="async"
+              alt="Industrial" 
+              className="w-full h-full object-cover grayscale opacity-50 mix-blend-luminosity" 
+              loading="lazy" 
             />
-            <div className="absolute inset-0 bg-solfil-orange/5 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-solfil-black/10 to-solfil-black/20"></div>
           </div>
         </div>
       </div>

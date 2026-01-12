@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Products from './components/Products';
@@ -10,43 +10,45 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import { Language } from './types';
 
 const App: React.FC = () => {
+  const [lang, setLang] = useState<Language>('PT');
+
   return (
     <div className="relative overflow-x-hidden">
-      <Header />
+      <Header lang={lang} setLang={setLang} />
       <main>
-        {/* Home section is at the very top, scroll-mt not needed here as it's the start */}
         <section id="home">
-          <Hero />
+          <Hero lang={lang} />
         </section>
         
         <section id="produtos" className="py-16 md:py-24 bg-white scroll-mt-24">
-          <Products />
+          <Products lang={lang} />
         </section>
 
         <section id="sobre" className="py-16 md:py-24 bg-gray-50 scroll-mt-24">
-          <About />
+          <About lang={lang} />
         </section>
 
         <section id="marcas" className="py-16 md:py-24 bg-white scroll-mt-24">
-          <Brands />
+          <Brands lang={lang} />
         </section>
 
         <section id="galeria" className="py-16 md:py-24 bg-gray-50 overflow-hidden scroll-mt-24">
-          <Gallery />
+          <Gallery lang={lang} />
         </section>
 
         <section id="testemunhos" className="py-16 md:py-24 bg-white scroll-mt-24">
-          <Testimonials />
+          <Testimonials lang={lang} />
         </section>
 
         <section id="contactos" className="py-16 md:py-24 bg-gray-50 scroll-mt-24">
-          <Contact />
+          <Contact lang={lang} />
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
+      <Footer lang={lang} />
+      <WhatsAppButton lang={lang} />
     </div>
   );
 };

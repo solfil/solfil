@@ -1,4 +1,6 @@
 
+export type Language = 'PT' | 'EN';
+
 export interface ServiceItem {
   id: string;
   title: string;
