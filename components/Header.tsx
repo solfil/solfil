@@ -32,7 +32,8 @@ const Header: React.FC = () => {
     { name: 'CONTACTOS', href: '#contactos' },
   ];
 
-  const logoPath = 'https://raw.githubusercontent.com/solfil/solfil/main/assets/logo.png'; 
+  // Caminho atualizado para a pasta assets local
+  const logoPath = '/assets/logo.png'; 
 
   return (
     <>
