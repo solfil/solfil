@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
   const [activeLoc, setActiveLoc] = useState(0);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
-  const logoPath = 'https://raw.githubusercontent.com/solfil/solfil/main/logo.png'; 
+  const logoPath = 'https://raw.githubusercontent.com/solfil/solfil/main/assets/logo.png'; 
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
