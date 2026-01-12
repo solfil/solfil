@@ -1,10 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [lang, setLang] = useState<'PT' | 'EN'>('PT');
+
+  // URL do logo fornecida pelo utilizador (convertida para raw para permitir hot-linking)
+  const logoUrl = "https://raw.githubusercontent.com/solfil/solfil/solfil-assets/assets/logo.png";
 
   // Bloquear scroll quando o menu está aberto
   useEffect(() => {
@@ -32,9 +34,6 @@ const Header: React.FC = () => {
     { name: 'CONTACTOS', href: '#contactos' },
   ];
 
-  // Caminho atualizado para a pasta assets local
-  const logoPath = '/assets/logo.png'; 
-
   return (
     <>
       {/* Gradiente de proteção para leitura quando o header é transparente */}
@@ -48,7 +47,7 @@ const Header: React.FC = () => {
         <div className="container mx-auto px-8 lg:px-16 flex justify-between items-center">
           <a href="#home" className="hover:opacity-80 transition-opacity flex-shrink-0">
             <img 
-              src={logoPath} 
+              src={logoUrl} 
               alt="Solfil" 
               className={`transition-all duration-500 ${scrolled ? 'h-6 md:h-7' : 'h-8 md:h-9'} w-auto object-contain ${!scrolled ? 'brightness-0 invert' : ''}`}
             />
@@ -127,7 +126,7 @@ const Header: React.FC = () => {
         <div className={`fixed inset-0 bg-solfil-black z-[100] lg:hidden transition-all duration-500 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex flex-col h-full p-8 md:p-12">
             <div className="flex justify-between items-center mb-12">
-              <img src={logoPath} alt="Solfil" className="h-7 brightness-0 invert" />
+              <img src={logoUrl} alt="Solfil" className="h-7 brightness-0 invert" />
               <button 
                 onClick={() => setIsOpen(false)} 
                 className="p-3 text-white/50 hover:text-white transition-colors bg-white/5 rounded-full border border-white/10"

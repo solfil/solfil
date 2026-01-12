@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface LocationInfo {
@@ -45,8 +44,8 @@ const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   
-  // Caminho atualizado para a pasta assets local
-  const logoPath = '/assets/logo.png'; 
+  // URL do logo fornecida pelo utilizador (convertida para raw)
+  const logoUrl = "https://raw.githubusercontent.com/solfil/solfil/solfil-assets/assets/logo.png";
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +112,7 @@ const Footer: React.FC = () => {
           <div className="space-y-8">
              <div className="flex flex-col items-start">
                <img 
-                 src={logoPath} 
+                 src={logoUrl} 
                  alt="Solfil" 
                  className="h-10 w-auto object-contain brightness-0 invert" 
                  loading="lazy"
