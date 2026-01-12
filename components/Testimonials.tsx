@@ -67,7 +67,8 @@ const Testimonials: React.FC = () => {
         </div>
       </div>
 
-      <div ref={scrollRef} className="flex overflow-x-auto no-scrollbar gap-8 pb-8 -mx-6 px-6 lg:mx-0 lg:px-0">
+      {/* Aumento do padding vertical (py-20) para acomodar a sombra hover sem cortes */}
+      <div ref={scrollRef} className="flex overflow-x-auto no-scrollbar gap-8 py-20 -my-20 -mx-6 px-6 lg:mx-0 lg:px-0">
         {testimonials.map((t) => (
           <div key={t.id} className="min-w-[320px] md:min-w-[420px] bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col justify-between group">
             <div className="relative pt-4">

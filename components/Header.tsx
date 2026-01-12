@@ -32,7 +32,7 @@ const Header: React.FC = () => {
     { name: 'CONTACTOS', href: '#contactos' },
   ];
 
-  const logoPath = 'https://github.com/solfil/solfil/blob/main/logo.png?raw=true'; 
+  const logoPath = 'https://raw.githubusercontent.com/solfil/solfil/main/logo.png'; 
 
   return (
     <>
