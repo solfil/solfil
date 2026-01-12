@@ -27,12 +27,9 @@ const locations: LocationInfo[] = [
 ];
 
 const Footer: React.FC = () => {
-  const [activeLocIndex, setActiveLocIndex] = useState(0);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const logoPath = 'https://github.com/solfil/solfil/blob/main/logo.png?raw=true'; 
-
-  const activeLoc = locations[activeLocIndex];
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,11 +95,11 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Footer Grid - 3 columns, middle is larger */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-20">
+        {/* Main Footer Grid - 4 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
           
-          {/* Column 1: Brand Info & Socials (Width: 3/12) */}
-          <div className="lg:col-span-3 space-y-8">
+          {/* Column 1: Brand Info & Socials */}
+          <div className="space-y-8">
              <div className="flex flex-col items-start origin-left">
                <img 
                  src={logoPath} 
@@ -110,7 +107,6 @@ const Footer: React.FC = () => {
                  className="h-9 md:h-10 w-auto object-contain" 
                  style={{ filter: 'brightness(0) invert(1)' }}
                  loading="lazy"
-                 decoding="async"
                />
              </div>
              <p className="text-white/60 leading-relaxed font-light text-sm">
@@ -128,61 +124,8 @@ const Footer: React.FC = () => {
              </div>
           </div>
 
-          {/* Column 2: Onde Estamos (Width: 6/12 - LARGEST) */}
-          <div className="lg:col-span-6">
-            <h4 className="font-semibold mb-10 text-[10px] tracking-[0.4em] text-solfil-orange uppercase text-center lg:text-left">Onde Estamos</h4>
-            
-            <div className="max-w-2xl mx-auto lg:ml-0">
-              {/* Tab Toggles */}
-              <div className="flex p-1 bg-white/5 rounded-full border border-white/10 mb-8 max-w-sm">
-                {locations.map((loc, idx) => (
-                  <button
-                    key={loc.name}
-                    onClick={() => setActiveLocIndex(idx)}
-                    className={`flex-1 py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all duration-300 ${
-                      activeLocIndex === idx ? 'bg-solfil-orange text-white shadow-lg' : 'text-white/40 hover:text-white/60'
-                    }`}
-                  >
-                    {loc.name}
-                  </button>
-                ))}
-              </div>
-
-              {/* Tab Content */}
-              <div key={activeLocIndex} className="grid md:grid-cols-2 gap-10 animate-in fade-in slide-in-from-top-2 duration-500">
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Morada</p>
-                    <p className="text-white/80 font-light text-sm leading-relaxed whitespace-pre-line">{activeLoc.address}</p>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Telefone</p>
-                      <p className="text-white font-bold text-sm">{activeLoc.phone}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">E-mail</p>
-                      <p className="text-white font-bold text-sm truncate">{activeLoc.email}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-6 md:border-l md:border-white/5 md:pl-10">
-                  <div className="space-y-2">
-                    <p className="text-[9px] font-black text-solfil-orange uppercase tracking-widest">Horário de Funcionamento</p>
-                    <p className="text-white/60 font-light text-xs leading-relaxed whitespace-pre-line bg-white/5 p-4 rounded-2xl border border-white/5">{activeLoc.hours}</p>
-                  </div>
-                  <button className="w-full py-4 border border-white/10 rounded-2xl text-[9px] font-black uppercase tracking-widest hover:bg-white hover:text-solfil-black transition-all">
-                    VER NO MAPA
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Column 3: Menu Rápido (Width: 3/12) */}
-          <div className="lg:col-span-3 lg:text-right">
+          {/* Column 2: Menu Rápido */}
+          <div className="lg:pl-8">
             <h4 className="font-semibold mb-10 text-[10px] tracking-[0.4em] text-solfil-orange uppercase">Menu Rápido</h4>
             <ul className="space-y-5 text-white/80 font-bold text-[10px] tracking-[0.3em]">
               <li><a href="#produtos" className="hover:text-solfil-orange transition-colors uppercase">PRODUTOS</a></li>
@@ -191,6 +134,44 @@ const Footer: React.FC = () => {
               <li><a href="#galeria" className="hover:text-solfil-orange transition-colors uppercase">GALERIA</a></li>
               <li><a href="#contactos" className="hover:text-solfil-orange transition-colors uppercase">CONTACTOS</a></li>
             </ul>
+          </div>
+
+          {/* Column 3: Location 1 - Vale de Parra */}
+          <div className="space-y-8">
+            <h4 className="font-semibold mb-10 text-[10px] tracking-[0.4em] text-solfil-orange uppercase">{locations[0].name}</h4>
+            <div className="space-y-6">
+              <div className="space-y-1">
+                <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Morada</p>
+                <p className="text-white/80 font-light text-xs leading-relaxed whitespace-pre-line">{locations[0].address}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Telefone</p>
+                <p className="text-white font-bold text-sm">{locations[0].phone}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Horário</p>
+                <p className="text-white/60 font-light text-[10px] leading-relaxed whitespace-pre-line">{locations[0].hours}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 4: Location 2 - Ferreiras */}
+          <div className="space-y-8">
+            <h4 className="font-semibold mb-10 text-[10px] tracking-[0.4em] text-solfil-orange uppercase">{locations[1].name}</h4>
+            <div className="space-y-6">
+              <div className="space-y-1">
+                <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Morada</p>
+                <p className="text-white/80 font-light text-xs leading-relaxed whitespace-pre-line">{locations[1].address}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Telefone</p>
+                <p className="text-white font-bold text-sm">{locations[1].phone}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[9px] font-black text-solfil-orange/60 uppercase tracking-widest">Horário</p>
+                <p className="text-white/60 font-light text-[10px] leading-relaxed whitespace-pre-line">{locations[1].hours}</p>
+              </div>
+            </div>
           </div>
 
         </div>

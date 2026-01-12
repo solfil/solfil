@@ -16,31 +16,32 @@ const App: React.FC = () => {
     <div className="relative overflow-x-hidden">
       <Header />
       <main>
+        {/* Home section is at the very top, scroll-mt not needed here as it's the start */}
         <section id="home">
           <Hero />
         </section>
         
-        <section id="produtos" className="py-16 md:py-24 bg-white">
+        <section id="produtos" className="py-16 md:py-24 bg-white scroll-mt-24">
           <Products />
         </section>
 
-        <section id="sobre" className="py-16 md:py-24 bg-gray-50">
+        <section id="sobre" className="py-16 md:py-24 bg-gray-50 scroll-mt-24">
           <About />
         </section>
 
-        <section id="marcas" className="py-16 md:py-24 bg-white">
+        <section id="marcas" className="py-16 md:py-24 bg-white scroll-mt-24">
           <Brands />
         </section>
 
-        <section id="galeria" className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+        <section id="galeria" className="py-16 md:py-24 bg-gray-50 overflow-hidden scroll-mt-24">
           <Gallery />
         </section>
 
-        <section id="testemunhos" className="py-16 md:py-24 bg-white">
+        <section id="testemunhos" className="py-16 md:py-24 bg-white scroll-mt-24">
           <Testimonials />
         </section>
 
-        <section id="contactos" className="py-16 md:py-24 bg-gray-50">
+        <section id="contactos" className="py-16 md:py-24 bg-gray-50 scroll-mt-24">
           <Contact />
         </section>
       </main>

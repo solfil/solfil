@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,10 +35,17 @@
       }
     </script>
     <style>
+        :root {
+            scroll-behavior: smooth;
+        }
+        html {
+            /* Sync with Tailwind scroll-mt-24 (96px) for perfect header offset */
+            scroll-padding-top: 96px;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
             font-weight: 300;
+            -webkit-font-smoothing: antialiased;
         }
         .no-scrollbar::-webkit-scrollbar {
             display: none;
