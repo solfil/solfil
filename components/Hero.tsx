@@ -13,7 +13,8 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
       sector1: 'PAVIMENTOS',
       sector2: 'REVESTIMENTOS',
       sector3: 'SANITÁRIOS',
-      explore: 'EXPLORAR'
+      explore: 'EXPLORAR',
+      location: 'ALBUFEIRA • ALGARVE'
     },
     EN: {
       title1: 'BUILDING',
@@ -24,7 +25,8 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
       sector1: 'FLOORING',
       sector2: 'COATINGS',
       sector3: 'SANITARY WARE',
-      explore: 'EXPLORE'
+      explore: 'EXPLORE',
+      location: 'ALBUFEIRA • ALGARVE'
     }
   };
 
@@ -45,7 +47,7 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
 
   return (
     <div className="h-screen w-full p-4 lg:p-6 flex flex-col relative overflow-hidden bg-white">
-      <div className="relative flex-1 w-full rounded-[40px] lg:rounded-[56px] overflow-hidden bg-solfil-orange shadow-2xl flex flex-col items-center justify-center">
+      <div className="relative flex-1 w-full rounded-[40px] lg:rounded-[56px] overflow-hidden bg-solfil-orange shadow-2xl flex flex-col pt-48 md:pt-48 lg:pt-64 pb-40 lg:pb-24">
         
         <div className="absolute inset-0 z-0">
           <img 
@@ -57,68 +59,77 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-solfil-orange via-solfil-orange/95 to-solfil-black/40"></div>
         </div>
 
-        {/* Decorative elements */}
+        {/* Elementos Decorativos */}
         <div className="absolute top-[-10%] right-[-10%] w-[120%] h-[120%] z-10 pointer-events-none overflow-visible flex items-center justify-center">
-          <div className="absolute w-[180%] h-[180%] animate-spin-slow opacity-40">
+          <div className="absolute w-[180%] h-[180%] animate-spin-slow opacity-30">
             <svg className="w-full h-full text-white" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="49.8" fill="none" stroke="currentColor" strokeWidth="0.05" strokeDasharray="0.3 1.5" />
             </svg>
           </div>
           <div className="absolute w-full h-full flex items-center justify-center animate-float">
-             <div className="absolute w-[85vw] h-[85vw] md:w-[55vw] md:h-[55vw] border-[1px] border-white/30 rounded-full backdrop-blur-[1px]"></div>
-             <div className="absolute w-[70vw] h-[70vw] md:w-[45vw] md:h-[45vw] border-[0.5px] border-white/20 rounded-full"></div>
+             <div className="absolute w-[85vw] h-[85vw] md:w-[55vw] md:h-[55vw] border-[1px] border-white/20 rounded-full backdrop-blur-[1px]"></div>
           </div>
         </div>
         
-        <div className="relative z-20 container mx-auto px-8 md:px-16 lg:px-24">
-          <div className="max-w-5xl space-y-10">
-            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-100">
-              <h1 className="text-4xl md:text-7xl lg:text-[100px] font-bold text-white leading-[0.85] tracking-tighter uppercase drop-shadow-2xl">
-                {t.title1}<br />
-                <span className="font-normal text-white/80 italic">{t.title2}</span>.
-              </h1>
-            </div>
+        {/* Conteúdo Principal */}
+        <div className="relative z-20 container mx-auto px-6 md:px-16 lg:px-24 h-full flex flex-col justify-between">
+          <div className="w-full flex flex-col lg:flex-row lg:justify-between lg:items-end gap-10">
             
-            <div className="flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-              <div className="space-y-8 max-w-md">
-                <p className="text-xl md:text-2xl text-white/95 leading-tight font-normal tracking-tight">
+            {/* Bloco Esquerdo: Título e Descrição */}
+            <div className="max-w-3xl space-y-6 md:space-y-12">
+              <div className="space-y-2 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-100">
+                <h1 className="text-[2.6rem] sm:text-5xl md:text-7xl lg:text-[92px] font-bold text-white leading-[0.85] tracking-tighter uppercase drop-shadow-2xl">
+                  {t.title1}<br />
+                  <span className="font-normal text-white/80 italic">{t.title2}</span>.
+                </h1>
+              </div>
+              
+              <div className="space-y-6 md:space-y-8 max-w-sm md:max-w-md animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+                <p className="text-lg md:text-2xl text-white/95 leading-tight font-normal tracking-tight">
                   {t.desc}
                 </p>
                 <a 
                   href="#sobre" 
                   onClick={(e) => handleScrollTo(e, '#sobre')}
-                  className="bg-white text-solfil-orange px-10 py-5 rounded-2xl font-black text-[10px] hover:bg-solfil-black hover:text-white transition-all shadow-2xl uppercase tracking-[0.3em] group flex items-center gap-4 w-fit"
+                  className="bg-white text-solfil-orange px-8 md:px-10 py-4 md:py-5 rounded-[20px] font-black text-[9px] md:text-[10px] hover:bg-solfil-black hover:text-white transition-all shadow-2xl uppercase tracking-[0.3em] group flex items-center justify-center gap-4 w-full md:w-fit"
                 >
                   {t.cta}
                 </a>
               </div>
-
-              <div className="flex flex-col gap-2">
-                 <span className="text-white/50 text-[9px] font-black tracking-[0.4em] uppercase">{t.sectors}</span>
-                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-white text-[10px] font-bold uppercase tracking-[0.2em]">
-                    <span>{t.sector1}</span>
-                    <span className="text-white/30">•</span>
-                    <span>{t.sector2}</span>
-                    <span className="text-white/30">•</span>
-                    <span>{t.sector3}</span>
-                 </div>
-              </div>
             </div>
+
+            {/* Bloco Direito (ou inferior no Mobile): Info e Setores */}
+            <div className="flex flex-col gap-4 border-l border-white/20 pl-6 lg:pl-0 lg:border-l-0 lg:border-r lg:pr-8 lg:items-end lg:text-right animate-in fade-in slide-in-from-right-8 duration-1000 delay-500">
+               <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                     <span className="text-white font-black text-[8px] tracking-[0.35em] uppercase opacity-70">{t.location}</span>
+                     <div className="w-6 h-[1px] bg-white/40"></div>
+                  </div>
+                  
+                  <div className="space-y-1.5">
+                     <span className="text-white/40 text-[8px] font-black tracking-[0.4em] uppercase block">{t.sectors}</span>
+                     <div className="flex flex-wrap lg:justify-end items-center gap-x-2.5 gap-y-1 text-white text-[10px] font-bold uppercase tracking-[0.15em]">
+                        <span className="hover:text-solfil-black transition-colors cursor-default">{t.sector1}</span>
+                        <span className="text-white/20 text-[14px] leading-none">•</span>
+                        <span className="hover:text-solfil-black transition-colors cursor-default">{t.sector2}</span>
+                        <span className="text-white/20 text-[14px] leading-none">•</span>
+                        <span className="hover:text-solfil-black transition-colors cursor-default">{t.sector3}</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
           </div>
         </div>
 
-        <div className="absolute bottom-12 left-8 md:left-12 z-20 flex items-center gap-4 md:gap-6">
-           <div className="w-8 md:w-12 h-[1px] bg-white/60"></div>
-           <span className="text-white/60 font-black text-[8px] md:text-[9px] tracking-[0.4em] md:tracking-[0.6em] uppercase whitespace-nowrap">ALBUFEIRA • ALGARVE</span>
-        </div>
-
+        {/* Rodapé do Hero: Explorar */}
         <a 
           href="#produtos" 
           onClick={(e) => handleScrollTo(e, '#produtos')}
-          className="absolute bottom-10 right-8 md:bottom-12 md:right-12 z-20 group flex items-center gap-4 transition-all"
+          className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-30 group flex flex-col items-center gap-3 transition-all"
         >
-           <span className="text-white/50 font-black text-[8px] tracking-[0.5em] uppercase group-hover:text-white transition-colors hidden sm:inline">{t.explore}</span>
-           <div className="w-12 h-12 md:w-10 md:h-10 rounded-full border border-white/30 flex items-center justify-center text-white/50 group-hover:border-white group-hover:text-white transition-all bg-white/5 backdrop-blur-sm shadow-xl">
+           <span className="text-white/40 font-black text-[7px] tracking-[0.5em] uppercase group-hover:text-white transition-colors">{t.explore}</span>
+           <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center text-white/40 group-hover:border-white group-hover:text-white group-hover:bg-white/10 transition-all backdrop-blur-sm">
              <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
              </svg>

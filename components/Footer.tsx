@@ -47,6 +47,8 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
   const [newsEmail, setNewsEmail] = useState('');
   const [newsStatus, setNewsStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const logoUrl = "https://raw.githubusercontent.com/solfil/solfil/solfil-assets/assets/logo.png";
+  
+  const COMPANY_EMAIL = 'geral@solfil.pt';
 
   const t = {
     PT: {
@@ -95,20 +97,19 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
     
     setNewsStatus('loading');
     try {
-      const response = await fetch('https://formsubmit.co/ajax/tpacheco@aorubro.pt', {
+      const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_EMAIL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ 
           email: newsEmail, 
-          _subject: 'Nova Subscrição Newsletter - Solfil',
-          _captcha: "false",
-          _template: 'table'
+          _subject: 'Nova Subscrição Newsletter - Solfil Website',
+          _captcha: "false"
         })
       });
       
       const result = await response.json();
       
-      if (response.ok && result.success === "true") {
+      if (response.ok && (result.success === "true" || result.success === true)) {
         setNewsStatus('success');
         setNewsEmail('');
         setTimeout(() => setNewsStatus('idle'), 5000);

@@ -5,6 +5,9 @@ import { Language } from '../types';
 const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   
+  // Substituir por: geral@solfil.pt ou o email oficial da empresa
+  const COMPANY_EMAIL = 'tpacheco@aorubro.pt';
+
   const translations = {
     PT: {
       tag: 'CONTACTE-NOS',
@@ -12,7 +15,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
       title2: 'ALGO GRANDE',
       p: 'Tem um projeto em mãos ou precisa de aconselhamento técnico? A nossa equipa de especialistas está pronta para ajudar.',
       successTitle: 'Mensagem Enviada!',
-      successDesc: 'Agradecemos o seu contacto. O seu pedido foi enviado com sucesso. Responderemos o mais brevemente possível.',
+      successDesc: 'Agradecemos o seu contacto. O seu pedido foi enviado com sucesso para a nossa equipa. Responderemos o mais brevemente possível.',
       successBtn: 'Enviar nova mensagem',
       labelName: 'Nome Completo*',
       labelEmail: 'E-mail*',
@@ -21,7 +24,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
       labelMsg: 'Mensagem / Lista de Materiais',
       submit: 'ENVIAR MENSAGEM',
       submitting: 'A ENVIAR...',
-      error: 'Erro no envio. Verifique se preencheu tudo corretamente ou tente mais tarde.',
+      error: 'Erro no envio. Verifique a sua ligação ou tente mais tarde.',
       types: ['Empresa / Profissional', 'Particular', 'Arquiteto / Projetista']
     },
     EN: {
@@ -30,7 +33,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
       title2: 'SOMETHING GREAT',
       p: 'Do you have a project or need technical advice? Our team of specialists is ready to help.',
       successTitle: 'Message Sent!',
-      successDesc: 'Thank you for contacting us. Your request has been sent successfully. We will respond as soon as possible.',
+      successDesc: 'Thank you for contacting us. Your request has been sent successfully to our team. We will respond as soon as possible.',
       successBtn: 'Send another message',
       labelName: 'Full Name*',
       labelEmail: 'Email*',
@@ -39,7 +42,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
       labelMsg: 'Message / Material List',
       submit: 'SEND MESSAGE',
       submitting: 'SENDING...',
-      error: 'Sending error. Please check all fields or try again later.',
+      error: 'Sending error. Please check your connection or try again later.',
       types: ['Company / Professional', 'Private Individual', 'Architect / Designer']
     }
   };
@@ -66,8 +69,8 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
     setStatus('submitting');
     
     try {
-      // Use the AJAX endpoint of FormSubmit to handle it as a single page application
-      const response = await fetch('https://formsubmit.co/ajax/tpacheco@aorubro.pt', {
+      // FormSubmit AJAX endpoint
+      const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_EMAIL}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 
@@ -76,9 +79,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
         body: JSON.stringify({ 
           ...formData, 
           _subject: `Solicitação Website Solfil: ${formData.name}`,
-          _captcha: "false", // Must be false for AJAX submission
-          _replyto: formData.email,
-          _template: 'box'
+          _captcha: "false" // Obrigatório falso para envios via AJAX
         })
       });
       
@@ -94,12 +95,11 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
           message: '' 
         });
       } else {
-        throw new Error('Server returned failure');
+        throw new Error('Falha no serviço');
       }
     } catch (error) {
       console.error('Submission error:', error);
       setStatus('error');
-      // Clear error after 5 seconds
       setTimeout(() => setStatus('idle'), 5000);
     }
   };
@@ -148,6 +148,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                           value={formData.name} 
                           onChange={handleChange} 
                           type="text" 
+                          autoComplete="name"
                           className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none text-sm" 
                         />
                       </div>
@@ -159,6 +160,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                           value={formData.email} 
                           onChange={handleChange} 
                           type="email" 
+                          autoComplete="email"
                           className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none text-sm" 
                         />
                       </div>
@@ -173,6 +175,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                           onChange={handleChange} 
                           type="tel" 
                           placeholder="+351" 
+                          autoComplete="tel"
                           className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none text-sm" 
                         />
                       </div>
