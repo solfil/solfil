@@ -5,8 +5,8 @@ import { Language } from '../types';
 const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   
-  // Substituir por: geral@solfil.pt ou o email oficial da empresa
-  const COMPANY_EMAIL = 'tpacheco@aorubro.pt';
+  // EMAIL OFICIAL DA EMPRESA - Certifique-se de confirmar o email de ativação enviado pelo FormSubmit
+  const COMPANY_EMAIL = 'geral@solfil.pt';
 
   const translations = {
     PT: {
@@ -24,7 +24,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
       labelMsg: 'Mensagem / Lista de Materiais',
       submit: 'ENVIAR MENSAGEM',
       submitting: 'A ENVIAR...',
-      error: 'Erro no envio. Verifique a sua ligação ou tente mais tarde.',
+      error: 'Erro no envio. Verifique a ativação do serviço ou tente mais tarde.',
       types: ['Empresa / Profissional', 'Particular', 'Arquiteto / Projetista']
     },
     EN: {
@@ -42,7 +42,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
       labelMsg: 'Message / Material List',
       submit: 'SEND MESSAGE',
       submitting: 'SENDING...',
-      error: 'Sending error. Please check your connection or try again later.',
+      error: 'Sending error. Please check service activation or try again later.',
       types: ['Company / Professional', 'Private Individual', 'Architect / Designer']
     }
   };
@@ -69,7 +69,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
     setStatus('submitting');
     
     try {
-      // FormSubmit AJAX endpoint
+      // Endpoint FormSubmit via AJAX
       const response = await fetch(`https://formsubmit.co/ajax/${COMPANY_EMAIL}`, {
         method: 'POST',
         headers: { 
@@ -78,14 +78,16 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
         },
         body: JSON.stringify({ 
           ...formData, 
-          _subject: `Solicitação Website Solfil: ${formData.name}`,
-          _captcha: "false" // Obrigatório falso para envios via AJAX
+          _subject: `Novo Pedido Website Solfil - ${formData.name}`,
+          _captcha: "false", // Importante ser string "false"
+          _template: "table" // Envia os dados num formato de tabela limpa no email
         })
       });
       
       const result = await response.json();
+      console.log('FormSubmit Response:', result); // Para depuração no console do browser
       
-      if (response.ok && (result.success === "true" || result.success === true)) {
+      if (response.ok) {
         setStatus('success');
         setFormData({ 
           name: '', 
@@ -95,12 +97,13 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
           message: '' 
         });
       } else {
-        throw new Error('Falha no serviço');
+        throw new Error(result.message || 'Erro na resposta do servidor');
       }
     } catch (error) {
-      console.error('Submission error:', error);
+      console.error('Submission Error:', error);
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 5000);
+      // Mantém a mensagem de erro visível por 8 segundos
+      setTimeout(() => setStatus('idle'), 8000);
     }
   };
 
@@ -139,6 +142,9 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                 <>
                   <p className="text-solfil-gray mb-10 font-normal text-base md:text-lg leading-relaxed">{t.p}</p>
                   <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+                    {/* Campo Honeypot para evitar spam sem captcha */}
+                    <input type="text" name="_honey" style={{ display: 'none' }} />
+                    
                     <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                       <div className="space-y-1.5">
                         <label className="text-[10px] font-black text-solfil-black uppercase tracking-widest ml-1">{t.labelName}</label>

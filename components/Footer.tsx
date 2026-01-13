@@ -48,7 +48,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
   const [newsStatus, setNewsStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const logoUrl = "https://raw.githubusercontent.com/solfil/solfil/solfil-assets/assets/logo.png";
   
-  const COMPANY_EMAIL = 'geral@solfil.pt';
+  const COMPANY_EMAIL = 'tiagopacheco@me.com';
 
   const t = {
     PT: {
@@ -109,7 +109,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
       
       const result = await response.json();
       
-      if (response.ok && (result.success === "true" || result.success === true)) {
+      if (response.ok) {
         setNewsStatus('success');
         setNewsEmail('');
         setTimeout(() => setNewsStatus('idle'), 5000);
@@ -117,6 +117,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
         throw new Error('Newsletter error');
       }
     } catch (err) {
+      console.error('Newsletter Error:', err);
       setNewsStatus('error');
       setTimeout(() => setNewsStatus('idle'), 4000);
     }
@@ -140,6 +141,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
                 </div>
               ) : (
                 <form onSubmit={handleNewsSubmit} className="flex flex-col sm:flex-row gap-3 p-2 bg-white/5 border border-white/10 rounded-[32px] transition-all focus-within:border-solfil-orange/50">
+                  <input type="text" name="_honey" style={{ display: 'none' }} />
                   <input 
                     type="email" 
                     required
@@ -156,7 +158,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
                   </button>
                 </form>
               )}
-              {newsStatus === 'error' && <p className="text-red-500 text-[10px] mt-2 text-center uppercase font-bold animate-pulse">Erro. Tente novamente.</p>}
+              {newsStatus === 'error' && <p className="text-red-500 text-[10px] mt-2 text-center uppercase font-bold animate-pulse">Erro de ligação. Tente novamente.</p>}
             </div>
           </div>
         </div>
