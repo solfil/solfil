@@ -145,7 +145,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
                     value={newsEmail}
                     onChange={(e) => setNewsEmail(e.target.value)}
                     placeholder={t.newsPlace} 
-                    className="flex-1 bg-transparent px-6 py-4 text-sm focus:outline-none font-light" 
+                    className="flex-1 bg-transparent px-6 py-4 text-sm focus:outline-none font-normal" 
                   />
                   <button 
                     disabled={newsStatus === 'loading'}
@@ -163,7 +163,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-20">
           <div className="space-y-8">
              <img src={logoUrl} alt="Solfil" className="h-10 brightness-0 invert" />
-             <p className="text-white/60 leading-relaxed font-light text-base max-w-sm">
+             <p className="text-white/60 leading-relaxed font-normal text-base max-w-sm">
                {lang === 'PT' ? 'Qualidade e rigor no fornecimento de materiais de construção desde 1998.' : 'Quality and precision in construction material supply since 1998.'}
              </p>
              <div className="pt-4 space-y-4">
@@ -201,7 +201,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
                   href={locations[activeLoc].mapUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block text-white/80 font-light text-base leading-relaxed whitespace-pre-line hover:text-solfil-orange transition-colors group"
+                  className="block text-white/80 font-normal text-base leading-relaxed whitespace-pre-line hover:text-solfil-orange transition-colors group"
                 >
                   {locations[activeLoc].address}
                   <svg className="inline-block ml-2 w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +214,7 @@ const Footer: React.FC<{ lang: Language }> = ({ lang }) => {
                 <a href={`tel:${locations[activeLoc].phoneRaw}`} className="block text-white font-bold text-lg hover:text-solfil-orange transition-colors">
                   {locations[activeLoc].phone}
                 </a>
-                <a href={`mailto:${locations[activeLoc].email}`} className="block text-white/50 font-light text-base hover:text-solfil-orange transition-colors">
+                <a href={`mailto:${locations[activeLoc].email}`} className="block text-white/50 font-normal text-base hover:text-solfil-orange transition-colors">
                   {locations[activeLoc].email}
                 </a>
               </div>

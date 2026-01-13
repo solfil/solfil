@@ -30,6 +30,19 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
 
   const t = translations[lang];
 
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const elem = document.getElementById(id.replace('#', ''));
+    if (elem) {
+      const offset = 90;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elemRect = elem.getBoundingClientRect().top;
+      const elemPosition = elemRect - bodyRect;
+      const offsetPosition = elemPosition - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="h-screen w-full p-4 lg:p-6 flex flex-col relative overflow-hidden bg-white">
       <div className="relative flex-1 w-full rounded-[40px] lg:rounded-[56px] overflow-hidden bg-solfil-orange shadow-2xl flex flex-col items-center justify-center">
@@ -44,7 +57,7 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-solfil-orange via-solfil-orange/95 to-solfil-black/40"></div>
         </div>
 
-        {/* Linhas decorativas reforçadas */}
+        {/* Decorative elements */}
         <div className="absolute top-[-10%] right-[-10%] w-[120%] h-[120%] z-10 pointer-events-none overflow-visible flex items-center justify-center">
           <div className="absolute w-[180%] h-[180%] animate-spin-slow opacity-40">
             <svg className="w-full h-full text-white" viewBox="0 0 100 100">
@@ -62,16 +75,20 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-100">
               <h1 className="text-4xl md:text-7xl lg:text-[100px] font-bold text-white leading-[0.85] tracking-tighter uppercase drop-shadow-2xl">
                 {t.title1}<br />
-                <span className="font-light text-white/80 italic">{t.title2}</span>.
+                <span className="font-normal text-white/80 italic">{t.title2}</span>.
               </h1>
             </div>
             
             <div className="flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-24 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
               <div className="space-y-8 max-w-md">
-                <p className="text-xl md:text-2xl text-white/95 leading-tight font-light tracking-tight">
+                <p className="text-xl md:text-2xl text-white/95 leading-tight font-normal tracking-tight">
                   {t.desc}
                 </p>
-                <a href="#sobre" className="bg-white text-solfil-orange px-10 py-5 rounded-2xl font-black text-[10px] hover:bg-solfil-black hover:text-white transition-all shadow-2xl uppercase tracking-[0.3em] group flex items-center gap-4 w-fit">
+                <a 
+                  href="#sobre" 
+                  onClick={(e) => handleScrollTo(e, '#sobre')}
+                  className="bg-white text-solfil-orange px-10 py-5 rounded-2xl font-black text-[10px] hover:bg-solfil-black hover:text-white transition-all shadow-2xl uppercase tracking-[0.3em] group flex items-center gap-4 w-fit"
+                >
                   {t.cta}
                 </a>
               </div>
@@ -95,7 +112,11 @@ const Hero: React.FC<{ lang: Language }> = ({ lang }) => {
            <span className="text-white/60 font-black text-[8px] md:text-[9px] tracking-[0.4em] md:tracking-[0.6em] uppercase whitespace-nowrap">ALBUFEIRA • ALGARVE</span>
         </div>
 
-        <a href="#produtos" className="absolute bottom-10 right-8 md:bottom-12 md:right-12 z-20 group flex items-center gap-4 transition-all">
+        <a 
+          href="#produtos" 
+          onClick={(e) => handleScrollTo(e, '#produtos')}
+          className="absolute bottom-10 right-8 md:bottom-12 md:right-12 z-20 group flex items-center gap-4 transition-all"
+        >
            <span className="text-white/50 font-black text-[8px] tracking-[0.5em] uppercase group-hover:text-white transition-colors hidden sm:inline">{t.explore}</span>
            <div className="w-12 h-12 md:w-10 md:h-10 rounded-full border border-white/30 flex items-center justify-center text-white/50 group-hover:border-white group-hover:text-white transition-all bg-white/5 backdrop-blur-sm shadow-xl">
              <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">

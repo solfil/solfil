@@ -64,7 +64,7 @@ const About: React.FC<{ lang: Language }> = ({ lang }) => {
                   </div>
                   <span className="font-bold text-[9px] text-solfil-black uppercase tracking-[0.2em]">{t.badge}</span>
                </div>
-               <p className="text-[11px] font-light text-solfil-gray leading-relaxed">{t.badgeDesc}</p>
+               <p className="text-[11px] font-normal text-solfil-gray leading-relaxed">{t.badgeDesc}</p>
             </div>
           </div>
 
@@ -89,7 +89,7 @@ const About: React.FC<{ lang: Language }> = ({ lang }) => {
               {t.title1}<br /><span className="font-semibold italic">{t.title2}</span><span className="font-bold text-solfil-orange">.</span>
             </h2>
             
-            <div className="space-y-8 text-solfil-gray font-light leading-relaxed text-lg lg:text-xl">
+            <div className="space-y-8 text-solfil-gray font-normal leading-relaxed text-lg lg:text-xl">
               <p>{t.p1}</p>
               <p>{t.p2}</p>
               <p>{t.p3}</p>

@@ -127,7 +127,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                     </svg>
                   </div>
                   <h3 className="text-xl font-bold text-green-900 mb-2 uppercase tracking-tight">{t.successTitle}</h3>
-                  <p className="text-green-700 font-light leading-relaxed mb-8 text-sm">{t.successDesc}</p>
+                  <p className="text-green-700 font-normal leading-relaxed mb-8 text-sm">{t.successDesc}</p>
                   <button 
                     onClick={() => setStatus('idle')} 
                     className="w-full py-4 bg-green-600 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-green-700 transition-all active:scale-95 shadow-md"
@@ -137,7 +137,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                 </div>
               ) : (
                 <>
-                  <p className="text-solfil-gray mb-10 font-light text-base md:text-lg leading-relaxed">{t.p}</p>
+                  <p className="text-solfil-gray mb-10 font-normal text-base md:text-lg leading-relaxed">{t.p}</p>
                   <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                     <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                       <div className="space-y-1.5">
@@ -148,7 +148,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                           value={formData.name} 
                           onChange={handleChange} 
                           type="text" 
-                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none text-sm" 
+                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none text-sm" 
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -159,7 +159,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                           value={formData.email} 
                           onChange={handleChange} 
                           type="email" 
-                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none text-sm" 
+                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none text-sm" 
                         />
                       </div>
                     </div>
@@ -173,7 +173,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                           onChange={handleChange} 
                           type="tel" 
                           placeholder="+351" 
-                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none text-sm" 
+                          className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none text-sm" 
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -183,7 +183,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                             name="clientType" 
                             value={formData.clientType} 
                             onChange={handleChange} 
-                            className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-light transition-all outline-none appearance-none cursor-pointer text-sm"
+                            className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange font-normal transition-all outline-none appearance-none cursor-pointer text-sm"
                           >
                             {t.types.map(type => <option key={type} value={type}>{type}</option>)}
                           </select>
@@ -201,7 +201,7 @@ const Contact: React.FC<{ lang: Language }> = ({ lang }) => {
                         value={formData.message} 
                         onChange={handleChange} 
                         rows={4} 
-                        className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange resize-none font-light transition-all outline-none text-sm"
+                        className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-solfil-orange/20 focus:border-solfil-orange resize-none font-normal transition-all outline-none text-sm"
                       ></textarea>
                     </div>
                     

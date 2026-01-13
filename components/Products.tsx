@@ -69,7 +69,7 @@ const Products: React.FC<{ lang: Language }> = ({ lang }) => {
           </h2>
         </div>
         <div className="max-w-xl">
-           <p className="text-solfil-gray text-lg md:text-xl font-light leading-relaxed mb-4">
+           <p className="text-solfil-gray text-lg md:text-xl font-normal leading-relaxed mb-4">
             {t.desc}
           </p>
         </div>
@@ -120,7 +120,7 @@ const ProductCard: React.FC<{ prod: any }> = ({ prod }) => (
       <h3 className="text-2xl font-bold text-solfil-black mb-3 group-hover:text-solfil-orange transition-colors">
         {prod.title}
       </h3>
-      <p className="text-solfil-gray text-sm font-light leading-relaxed">
+      <p className="text-solfil-gray text-sm font-normal leading-relaxed">
         {prod.description}
       </p>
     </div>
